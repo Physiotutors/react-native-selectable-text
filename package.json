@@ -1,0 +1,33 @@
+{
+  "name": "@physiotutors/react-native-selectable-text",
+  "version": "1.0.0",
+  "description": "Native text selection with a custom menu (e.g. Highlight / Copy) for React Native, with links that stay tappable.",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src",
+    "!src/__tests__",
+    "ios",
+    "android",
+    "!android/build",
+    "expo-module.config.json",
+    "docs",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test src/__tests__/*.test.mjs"
+  },
+  "keywords": ["react-native", "expo", "text-selection", "highlight", "selectable-text"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Physiotutors/react-native-selectable-text.git"
+  },
+  "peerDependencies": {
+    "expo": ">=53",
+    "react": "*",
+    "react-native": "*"
+  }
+}
