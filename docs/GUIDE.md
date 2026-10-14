@@ -30,6 +30,7 @@ In an article, the user drags over text, a small menu appears with **Highlight**
 2. Android's own text view does the selection and its handles; React Native still handles taps on links, exactly as for any other text.
 3. When Android builds the selection menu, the native view (`android/…/SelectableTextView.kt`) replaces Android's items (Copy, Share, Translate…) with the app's `menuOptions`, and tints the handles in the brand color.
 4. Tapping an option sends the same event to JavaScript as on iOS.
+5. The native view never sizes or positions the text itself; React Native does that, as it does inside its own container views. (Without this, Android re-did the layout when returning to a screen that was built in the background, and the paragraph showed up empty.)
 
 The app sees one component and one event on both platforms.
 
@@ -43,11 +44,11 @@ The app sees one component and one event on both platforms.
 | `ios/SelectableTextView.swift` | 221 | Swift | The iOS view: shows the text in a `UITextView`, builds the menu, reports the selection, handles link taps. |
 | `ios/SelectableTextModule.swift` | 40 | Swift | Registers the view and its props with Expo. Plain declarations. |
 | `ios/PhysiotutorsSelectableText.podspec` | 21 | Ruby (config) | Tells iOS builds how to compile the Swift files. |
-| `android/…/SelectableTextView.kt` | 156 | Kotlin | The Android view: replaces the selection menu items, reports the selection, tints the handles. |
+| `android/…/SelectableTextView.kt` | 167 | Kotlin | The Android view: replaces the selection menu items, reports the selection, tints the handles, and leaves sizing and positioning to React Native. |
 | `android/…/SelectableTextModule.kt` | 33 | Kotlin | Registers the view and its props with Expo. Plain declarations. |
 | `android/build.gradle`, `expo-module.config.json` | – | config | Build configuration; Expo links the module automatically. |
 
-About 380 lines of native code in total, of which the two `…View` files hold the logic.
+About 390 lines of native code in total, of which the two `…View` files hold the logic.
 
 ## The contract between JavaScript and native code
 

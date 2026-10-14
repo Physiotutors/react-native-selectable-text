@@ -71,6 +71,17 @@ class SelectableTextView(context: Context, appContext: AppContext) : ExpoView(co
     override fun onDestroyActionMode(mode: ActionMode) = Unit
   }
 
+  // React Native measures and positions the <Text> inside this view. ExpoView is a LinearLayout,
+  // which would otherwise measure and lay out the child again whenever Android runs its own layout
+  // pass (e.g. when returning to a screen that was built while the app was in the background): the
+  // text then shrinks to nothing or wraps one letter per line. React Native's own container views
+  // skip both steps in the same way.
+  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec))
+  }
+
+  override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) = Unit
+
   override fun onViewAdded(child: View) {
     super.onViewAdded(child)
     attach()

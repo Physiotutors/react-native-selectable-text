@@ -9,3 +9,4 @@ First release, replacing `@rob117/react-native-selectable-text` in the Physiotut
 - `onSelection` also reports `chosenOptionIndex`, `selectionStart` and `selectionEnd`.
 - Brand-colored selection and handles (`selectionColor`, `handleColor`).
 - `collectTextAndLinks(tnode)` helper for react-native-render-html.
+- Android: the paragraph no longer shows up empty after returning to a screen that was built while the app was in the background (e.g. behind a paywall or the browser).
