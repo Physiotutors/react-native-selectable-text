@@ -12,6 +12,11 @@ struct TextLink: Record {
   @Field var text: String = ""
 }
 
+struct TextHighlight: Record {
+  @Field var start: Int = 0
+  @Field var end: Int = 0
+}
+
 public class SelectableTextModule: Module {
   public func definition() -> ModuleDefinition {
     Name("PhysiotutorsSelectableText")
@@ -25,6 +30,14 @@ public class SelectableTextModule: Module {
 
       Prop("links") { (view: SelectableTextView, links: [TextLink]) in
         view.links = links
+      }
+
+      Prop("highlights") { (view: SelectableTextView, highlights: [TextHighlight]) in
+        view.highlights = highlights
+      }
+
+      Prop("highlightColor") { (view: SelectableTextView, color: UIColor?) in
+        view.highlightColor = color
       }
 
       Prop("selectionColor") { (view: SelectableTextView, color: UIColor?) in

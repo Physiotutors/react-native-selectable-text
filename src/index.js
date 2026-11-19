@@ -50,6 +50,8 @@ export function SelectableTextView({
     links = NO_LINKS,
     onLinkPress,
     selectionColor,
+    highlights = NO_LINKS,
+    highlightColor = '#e0e3fe',
     handleColor,
     contentKey,
     style,
@@ -76,6 +78,9 @@ export function SelectableTextView({
         [linksKey]
     )
 
+    const highlightsKey = JSON.stringify(highlights)
+    const nativeHighlights = useMemo(() => highlights.map(({ start, end }) => ({ start, end })), [highlightsKey])
+
     if (!NativeSelectableTextView) {
         return isValidElement(text) ? cloneElement(text, { selectable: true }) : text
     }
@@ -101,6 +106,8 @@ export function SelectableTextView({
             style={style}
             menuItems={menuItems}
             links={nativeLinks}
+            highlights={nativeHighlights}
+            highlightColor={highlightColor}
             contentKey={contentKey ?? textOf(text)}
             selectionColor={selectionColor}
             handleColor={handleColor ?? selectionColor}

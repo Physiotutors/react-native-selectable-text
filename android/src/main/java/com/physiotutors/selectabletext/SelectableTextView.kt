@@ -3,6 +3,10 @@ package com.physiotutors.selectabletext
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.text.Editable
+import android.text.Spannable
+import android.text.TextWatcher
+import android.text.style.BackgroundColorSpan
 import android.view.ActionMode
 import android.view.Menu
 import android.view.View
@@ -23,6 +27,24 @@ class SelectableTextView(context: Context, appContext: AppContext) : ExpoView(co
   private val onMenuAction by EventDispatcher()
 
   var menuItems: List<MenuItem> = emptyList()
+
+  var highlights: List<TextHighlight> = emptyList()
+    set(value) {
+      field = value
+      applyHighlights()
+    }
+  var highlightColor: Int? = null
+    set(value) {
+      field = value
+      applyHighlights()
+    }
+
+  private class SavedHighlight(color: Int) : BackgroundColorSpan(color)
+  private val textWatcher = object : TextWatcher {
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = applyHighlights()
+    override fun afterTextChanged(s: Editable?) = Unit
+  }
 
   var handleColor: Int? = null
     set(value) {
@@ -104,13 +126,31 @@ class SelectableTextView(context: Context, appContext: AppContext) : ExpoView(co
     detach()
     found.customSelectionActionModeCallback = selectionCallback
     textView = found
+    found.addTextChangedListener(textWatcher)
+    applyHighlights()
     applyHandleColor()
   }
 
   private fun detach() {
     restoreHandles()
+    textView?.removeTextChangedListener(textWatcher)
+    (textView?.text as? Spannable)?.let { text ->
+      text.getSpans(0, text.length, SavedHighlight::class.java).forEach { text.removeSpan(it) }
+    }
     textView?.customSelectionActionModeCallback = null
     textView = null
+  }
+
+  private fun applyHighlights() {
+    val view = textView ?: return
+    // Selectable TextView uses a Spannable buffer; never replace it or lose React Native's links.
+    val text = view.text as? Spannable ?: return
+    text.getSpans(0, text.length, SavedHighlight::class.java).forEach { text.removeSpan(it) }
+    val color = highlightColor ?: return
+    highlights.filter { it.start >= 0 && it.end > it.start && it.end <= text.length }.forEach {
+      text.setSpan(SavedHighlight(color), it.start, it.end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+    view.invalidate()
   }
 
   // Per-view selection handles exist since Android 10; older versions keep the theme's accent color.
