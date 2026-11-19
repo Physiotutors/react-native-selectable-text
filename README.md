@@ -17,8 +17,10 @@ New to the code? Start with the plain-language guide: **[docs/GUIDE.md](docs/GUI
 
 ## Installation
 
+The saved highlight props require v1.1.0. The tagged install is available once v1.1.0 is released.
+
 ```sh
-npm install github:Physiotutors/react-native-selectable-text#v1.0.0
+npm install github:Physiotutors/react-native-selectable-text#v1.1.0
 ```
 
 It's an [Expo module](https://docs.expo.dev/modules/overview/): the native code is linked automatically. Rebuild the app after installing (`npx expo run:ios` / `run:android`, or an EAS build). There's no separate `pod install` step with Expo prebuild.
