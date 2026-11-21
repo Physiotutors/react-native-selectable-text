@@ -17,8 +17,10 @@ New to the code? Start with the plain-language guide: **[docs/GUIDE.md](docs/GUI
 
 ## Installation
 
+The saved highlight props require v1.1.0. The tagged install is available once v1.1.0 is released.
+
 ```sh
-npm install github:Physiotutors/react-native-selectable-text#v1.0.0
+npm install github:Physiotutors/react-native-selectable-text#v1.1.0
 ```
 
 It's an [Expo module](https://docs.expo.dev/modules/overview/): the native code is linked automatically. Rebuild the app after installing (`npx expo run:ios` / `run:android`, or an EAS build). There's no separate `pod install` step with Expo prebuild.
@@ -92,6 +94,8 @@ function Paragraph({ tnode, children, onLinkPress }) {
 | `onSelection` | `(event) => void` | | Called when the user taps a menu option (see below). |
 | `links` | `{ start, end, href, text? }[]` | iOS | Character ranges of links in the rendered text (UTF-16, i.e. JavaScript string indices). |
 | `onLinkPress` | `({ index, href, link }) => void` | iOS | Called when a link is tapped. |
+| `highlights` | `{ start, end }[]` | `[]` | Persistent background ranges in UTF-16 units. Links and text styling are preserved. |
+| `highlightColor` | color | `#e0e3fe` | Background color of saved highlights. |
 | `selectionColor` | color | | Selection highlight and, on iOS, the handles. |
 | `handleColor` | color | Android 10+ | Selection handle color. Defaults to `selectionColor`. |
 | `contentKey` | `string` | | Change it when the text changes without remounting. Defaults to the text's strings. |

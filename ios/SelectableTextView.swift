@@ -12,6 +12,12 @@ class SelectableTextView: ExpoView, UITextViewDelegate {
   var links: [TextLink] = [] {
     didSet { setNeedsContentUpdate() }
   }
+  var highlights: [TextHighlight] = [] {
+    didSet { setNeedsContentUpdate() }
+  }
+  var highlightColor: UIColor? {
+    didSet { setNeedsContentUpdate() }
+  }
   var selectionColor: UIColor? {
     didSet { textView.tintColor = selectionColor }
   }
@@ -95,7 +101,17 @@ class SelectableTextView: ExpoView, UITextViewDelegate {
 
     let text = NSMutableAttributedString(attributedString: source)
     applyLinks(to: text)
+    if let highlightColor {
+      for highlight in highlights where highlight.start >= 0 && highlight.end > highlight.start && highlight.end <= text.length {
+        text.addAttribute(.backgroundColor, value: highlightColor,
+                          range: NSRange(location: highlight.start, length: highlight.end - highlight.start))
+      }
+    }
+    let selection = textView.selectedRange
     textView.attributedText = text
+    if selection.location != NSNotFound, NSMaxRange(selection) <= text.length {
+      textView.selectedRange = selection
+    }
 
     paragraph.isHidden = true
     hiddenViews.add(paragraph)

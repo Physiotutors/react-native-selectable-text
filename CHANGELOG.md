@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- Add persistent `highlights` ranges and `highlightColor` on iOS and Android.
+
 ## 1.0.0
 
 First release, replacing `@rob117/react-native-selectable-text` in the Physiotutors app.

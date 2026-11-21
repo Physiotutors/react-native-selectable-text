@@ -14,6 +14,11 @@ class MenuItem : Record {
   val title: String = ""
 }
 
+class TextHighlight : Record {
+  @Field val start: Int = 0
+  @Field val end: Int = 0
+}
+
 class SelectableTextModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("PhysiotutorsSelectableText")
@@ -23,6 +28,14 @@ class SelectableTextModule : Module() {
 
       Prop("menuItems") { view: SelectableTextView, items: List<MenuItem> ->
         view.menuItems = items
+      }
+
+      Prop("highlights") { view: SelectableTextView, highlights: List<TextHighlight> ->
+        view.highlights = highlights
+      }
+
+      Prop("highlightColor") { view: SelectableTextView, color: Color? ->
+        view.highlightColor = color?.toArgb()
       }
 
       Prop("handleColor") { view: SelectableTextView, color: Color? ->

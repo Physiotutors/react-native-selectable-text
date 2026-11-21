@@ -1,6 +1,6 @@
 {
   "name": "@physiotutors/react-native-selectable-text",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Native text selection with a custom menu (e.g. Highlight / Copy) for React Native, with links that stay tappable.",
   "main": "src/index.js",
   "types": "src/index.d.ts",

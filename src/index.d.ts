@@ -40,6 +40,9 @@ export interface SelectableTextViewProps {
     onLinkPress?: (event: LinkPressEvent) => void
     /** Selection highlight and handle color (iOS) / highlight color fallback. */
     selectionColor?: ColorValue
+    /** Saved highlight ranges in UTF-16 units. Invalid ranges are ignored. */
+    highlights?: { start: number; end: number }[]
+    highlightColor?: ColorValue
     /** Android 10+: color of the selection handles. Defaults to `selectionColor`. */
     handleColor?: ColorValue
     /** Change it when the text changes without the component remounting. Defaults to the text's strings. */
